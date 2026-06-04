@@ -15,9 +15,9 @@ func main() {
 	var mhs status	
 	fmt.Scan(&n)
 	for i := 0; i < n; i++ {
-		fmt.Scan(&mhs[i].id, &mhs[i].nama, &mhs[i].hadir, &mhs[i].izin, &mhs[i].alfa, &mhs[i].sakit)
+		fmt.Scan(&mhs[i].id, &mhs[i].nama, &mhs[i].hadir, &mhs[i].izin, &mhs[i].alfa, &mhs[i].sakit) //input data mahasiswa
 	}
 	for i := 0; i < n; i++ {
-		fmt.Printf("%-8s | %-11s | %d\n", mhs[i].id, mhs[i].nama, mhs[i].alfa)
+		fmt.Printf("%-8s | %-11s | %d\n", mhs[i].id, mhs[i].nama, mhs[i].alfa) //nampilin data alfa mahasiswa
 	}
 }
