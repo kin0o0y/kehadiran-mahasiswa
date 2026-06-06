@@ -59,7 +59,7 @@ func updateData(data *status) {
 	fmt.Print("Masukkan NIM mahasiswa yang ingin diupdate (001 - 020): ")
 	fmt.Scan(&nim)
 
-	//cari data mahasiswa berdasarkan nim pakai sequential search
+	//cari data mahasiswa berdasarkan nim
 	for i = 0; i < 20; i++ {
 		if nim == data[i].id {
 			idx = i
@@ -81,7 +81,7 @@ func updateData(data *status) {
 	}
 	fmt.Println()
 
-	//update data berdasarkan pilihan pakai switch case
+	//update data berdasarkan pilihan
 	switch pilihan {
 	case 1:
 		data[idx].hadir++
@@ -108,7 +108,7 @@ func cariData(data *status) {
 	fmt.Print("Masukkan pilihan (1-2): ")
 	fmt.Scan(&pilihan)
 
-	//pilhan pencarian menggunakan switch case, sequantial search untuk nama, dan binary search untuk nim
+	//pilhan pencarian
 	switch pilihan {
 	case 1:
 		fmt.Print("Masukkan Nama Mahasiswa: ")
@@ -127,7 +127,7 @@ func cariData(data *status) {
 	case 2:
 		fmt.Print("Masukkan NIM Mahasiswa: ")
 		fmt.Scan(&nim)
-		//cari data mahasiswa berdasarkan nim pakai binary search
+		//cari data mahasiswa berdasarkan nim
 		low = 0
 		high = 19
 		for low <= high {
