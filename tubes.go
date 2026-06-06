@@ -21,7 +21,7 @@ func menu() {
 	fmt.Println("| 5. Statistik Data Kehadiran Mahasiswa                 |")
 	fmt.Println("| 6. Keluar                                             |")
 	fmt.Println("⌞——————————————————————————————————————————————————————⌟")
-	fmt.Println("Pilih menu (1-6): ")
+	fmt.Print("Pilih menu (1-6): ")
 }
 
 func isiData(data *status) {
