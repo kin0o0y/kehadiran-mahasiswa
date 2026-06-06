@@ -12,7 +12,7 @@ type status [NMAX]mahasiswa
 
 func menu() {
 	fmt.Println("⌜——————————————————————————————————————————————————————⌝")
-	fmt.Println("| SELAMAT DATANG DI SIKEMA (SISTEM KEHADIRAN MAHASISWA) |")
+	fmt.Println("|SELAMAT DATANG DI SIKEMA (APLIKASI KEHADIRAN MAHASISWA)|")
 	fmt.Println("————————————————————————————————————————————————————————")
 	fmt.Println("| 1. Data Kehadiran Mahasiswa                           |")
 	fmt.Println("| 2. Update Kehadiran Mahasiswa                         |")
