@@ -3,12 +3,17 @@ package main
 import "fmt"
 
 type mahasiswa struct {
-	Nama  string
-	Absen [14]string
+	NIM      int
+	Nama     string
+	Angkatan int
+	Aktif    bool
+	Absen    [14]string
 }
 
 var dataMahasiswa [100]mahasiswa
 var jmlmahasiswa int = 20
+var dataKeluar [100]mahasiswa
+var jmlKeluar int = 0
 
 func inisialisasiData() {
 	nama := [20]string{
@@ -36,6 +41,9 @@ func inisialisasiData() {
 	}
 	for i := 0; i < jmlmahasiswa; i++ {
 		dataMahasiswa[i].Nama = nama[i]
+		dataMahasiswa[i].NIM = 130100 + i
+		dataMahasiswa[i].Angkatan = 2025
+		dataMahasiswa[i].Aktif = true
 
 		for j := 0; j < 14; j++ {
 			dataMahasiswa[i].Absen[j] = "H"
@@ -112,6 +120,9 @@ func tampilData() {
 
 		fmt.Println()
 		fmt.Println("Nama :", dataMahasiswa[i].Nama)
+		fmt.Println("NIM :", dataMahasiswa[i].NIM)
+		fmt.Println("Angkatan :", dataMahasiswa[i].Angkatan)
+		fmt.Println("Aktif :", dataMahasiswa[i].Aktif)
 		fmt.Println("Hadir :", hadir)
 		fmt.Println("Izin :", izin)
 		fmt.Println("Sakit :", sakit)
@@ -130,12 +141,48 @@ func menuUtama() int {
 	fmt.Println("3. Searching")
 	fmt.Println("4. Sorting")
 	fmt.Println("5. Statistik")
+	fmt.Println("6. Tambah Mahasiswa")
+	fmt.Println("7. Hapus Mahasiswa")
+	fmt.Println("8. Mahasiswa Keluar")
 	fmt.Println("0. Keluar")
 
 	fmt.Print("Pilih : ")
 	fmt.Scan(&pilih)
 
+	if pilih < 0 || pilih > 8 {
+
+		fmt.Println("Menu tidak tersedia")
+		return -1
+
+	}
+
 	return pilih
+}
+
+func sudahAda(nama string) bool {
+
+	for i := 0; i < jmlmahasiswa; i++ {
+
+		if dataMahasiswa[i].Nama == nama {
+			return true
+		}
+
+	}
+
+	return false
+}
+
+func namaValid(nama string) bool {
+
+	for i := 0; i < len(nama); i++ {
+
+		if nama[i] >= '0' && nama[i] <= '9' {
+			return false
+		}
+
+	}
+
+	return true
 }
 
 func main() {
@@ -162,6 +209,17 @@ func main() {
 		}
 		if pilih == 5 {
 			menuStatistik()
+		}
+		if pilih == 6 {
+			tambahMahasiswa()
+		}
+
+		if pilih == 7 {
+			hapusMahasiswa()
+		}
+
+		if pilih == 8 {
+			tampilMahasiswaKeluar()
 		}
 
 	}
@@ -191,8 +249,8 @@ func menuSearching() {
 
 	fmt.Println()
 	fmt.Println("===== MENU SEARCHING =====")
-	fmt.Println("1. Sequential Search")
-	fmt.Println("2. Binary Search")
+	fmt.Println("1. Cari Mahasiswa")
+	fmt.Println("2. Cari Mahasiswa Cepat")
 
 	fmt.Print("Pilih : ")
 	fmt.Scan(&pilih)
@@ -206,6 +264,7 @@ func menuSearching() {
 
 	} else if pilih == 2 {
 
+		insertSortNama()
 		index = binarySearch(nama)
 
 	}
@@ -219,6 +278,9 @@ func menuSearching() {
 		fmt.Println()
 		fmt.Println("Data ditemukan")
 		fmt.Println("Nama :", dataMahasiswa[index].Nama)
+		fmt.Println("NIM :", dataMahasiswa[index].NIM)
+		fmt.Println("Angkatan :", dataMahasiswa[index].Angkatan)
+		fmt.Println("Aktif :", dataMahasiswa[index].Aktif)
 		fmt.Println("Hadir :", hitungHadir(dataMahasiswa[index]))
 		fmt.Println("Izin :", hitungIzin(dataMahasiswa[index]))
 		fmt.Println("Sakit :", hitungSakit(dataMahasiswa[index]))
@@ -252,40 +314,161 @@ func inputAbsensi() {
 		fmt.Print("Masukkan pertemuan (1-14) : ")
 		fmt.Scan(&pertemuan)
 
-		if pertemuan >= 1 && pertemuan <= 14 {
+		if pertemuan < 1 || pertemuan > 14 {
+			fmt.Println("Pertemuan harus 1 - 14")
+			return
+		}
 
-			fmt.Println("1. Hadir")
-			fmt.Println("2. Izin")
-			fmt.Println("3. Sakit")
-			fmt.Println("4. Alfa")
+		fmt.Println("1. Hadir")
+		fmt.Println("2. Izin")
+		fmt.Println("3. Sakit")
+		fmt.Println("4. Alfa")
 
-			fmt.Print("Pilih status : ")
-			fmt.Scan(&status)
+		fmt.Print("Pilih status : ")
+		fmt.Scan(&status)
 
-			if status == 1 {
-				dataMahasiswa[index].Absen[pertemuan-1] = "H"
-			} else if status == 2 {
-				dataMahasiswa[index].Absen[pertemuan-1] = "I"
-			} else if status == 3 {
-				dataMahasiswa[index].Absen[pertemuan-1] = "S"
-			} else if status == 4 {
-				dataMahasiswa[index].Absen[pertemuan-1] = "A"
-			} else {
-				fmt.Println("Status tidak valid")
-			}
+		if status < 1 || status > 4 {
 
-			fmt.Println("Absensi berhasil diperbarui")
-			fmt.Println()
-			fmt.Println("Absensi", dataMahasiswa[index].Nama)
+			fmt.Println("Status tidak valid")
+			return
 
-			for i := 0; i < 14; i++ {
-				fmt.Print("P", i+1, ":", dataMahasiswa[index].Absen[i], " ")
-			}
+		}
 
-			fmt.Println()
+		if status == 1 {
+			dataMahasiswa[index].Absen[pertemuan-1] = "H"
+		} else if status == 2 {
+			dataMahasiswa[index].Absen[pertemuan-1] = "I"
+		} else if status == 3 {
+			dataMahasiswa[index].Absen[pertemuan-1] = "S"
+		} else if status == 4 {
+			dataMahasiswa[index].Absen[pertemuan-1] = "A"
 		} else {
+			fmt.Println("Status tidak valid")
+		}
 
-			fmt.Println("Pertemuan tidak valid")
+		fmt.Println("Absensi berhasil diperbarui")
+		fmt.Println()
+		fmt.Println("Absensi", dataMahasiswa[index].Nama)
+
+		for i := 0; i < 14; i++ {
+			fmt.Print("P", i+1, ":", dataMahasiswa[index].Absen[i], " ")
+		}
+
+		fmt.Println()
+
+	}
+}
+
+func tambahMahasiswa() {
+
+	if jmlmahasiswa >= 100 {
+
+		fmt.Println("Kapasitas penuh")
+		return
+
+	}
+
+	var m mahasiswa
+
+	fmt.Print("Masukkan NIM : ")
+	fmt.Scan(&m.NIM)
+
+	if m.NIM <= 0 {
+
+		fmt.Println("NIM tidak valid")
+		return
+
+	}
+
+	fmt.Print("Masukkan Nama : ")
+	fmt.Scan(&m.Nama)
+
+	if !namaValid(m.Nama) {
+
+		fmt.Println("Nama tidak boleh mengandung angka")
+		return
+
+	}
+
+	if sudahAda(m.Nama) {
+
+		fmt.Println("Mahasiswa sudah ada")
+		return
+
+	}
+
+	fmt.Print("Masukkan Angkatan : ")
+	fmt.Scan(&m.Angkatan)
+
+	if m.Angkatan < 2020 || m.Angkatan > 2030 {
+
+		fmt.Println("Angkatan tidak valid")
+		return
+
+	}
+
+	m.Aktif = true
+
+	for i := 0; i < 14; i++ {
+		m.Absen[i] = "H"
+	}
+
+	dataMahasiswa[jmlmahasiswa] = m
+	jmlmahasiswa++
+
+	fmt.Println("Mahasiswa berhasil ditambahkan")
+}
+
+func hapusMahasiswa() {
+
+	var nama string
+
+	fmt.Print("Masukkan nama mahasiswa : ")
+	fmt.Scan(&nama)
+
+	index := sequentialSearch(nama)
+
+	if index == -1 {
+
+		fmt.Println("Mahasiswa tidak ditemukan")
+
+	} else {
+
+		dataKeluar[jmlKeluar] = dataMahasiswa[index]
+		jmlKeluar++
+
+		for i := index; i < jmlmahasiswa-1; i++ {
+
+			dataMahasiswa[i] = dataMahasiswa[i+1]
+
+		}
+
+		jmlmahasiswa--
+		dataMahasiswa[jmlmahasiswa] = mahasiswa{}
+
+		fmt.Println("Mahasiswa berhasil dihapus")
+		fmt.Println("Data dipindahkan ke daftar mahasiswa keluar")
+
+	}
+
+}
+
+func tampilMahasiswaKeluar() {
+
+	fmt.Println()
+	fmt.Println("===== MAHASISWA KELUAR =====")
+
+	if jmlKeluar == 0 {
+
+		fmt.Println("Belum ada mahasiswa keluar")
+
+	} else {
+
+		for i := 0; i < jmlKeluar; i++ {
+
+			fmt.Println()
+			fmt.Println("NIM :", dataKeluar[i].NIM)
+			fmt.Println("Nama :", dataKeluar[i].Nama)
 
 		}
 
@@ -659,11 +842,12 @@ func alpaTersedikit() {
 func statistikMahasiswa() {
 
 	var nama string
+	var index int
 
 	fmt.Print("Masukkan nama mahasiswa : ")
 	fmt.Scan(&nama)
 
-	index := sequentialSearch(nama)
+	index = sequentialSearch(nama)
 
 	if index == -1 {
 
