@@ -107,27 +107,24 @@ func hitungAlpa(m mahasiswa) int {
 }
 
 func tampilData() {
-
 	fmt.Println()
-	fmt.Println("===== DATA ABSENSI IF-49-03 =====")
+	fmt.Println("================================================================================")
+	fmt.Printf("%-20s %-8s %-10s %-6s %-6s %-6s %-6s %-6s\n",
+		"Nama", "NIM", "Angkatan", "Aktif", "Hadir", "Izin", "Sakit", "Alfa")
+	fmt.Println("================================================================================")
 
 	for i := 0; i < jmlmahasiswa; i++ {
-
-		hadir := hitungHadir(dataMahasiswa[i])
-		izin := hitungIzin(dataMahasiswa[i])
-		sakit := hitungSakit(dataMahasiswa[i])
-		alpa := hitungAlpa(dataMahasiswa[i])
-
-		fmt.Println()
-		fmt.Println("Nama :", dataMahasiswa[i].Nama)
-		fmt.Println("NIM :", dataMahasiswa[i].NIM)
-		fmt.Println("Angkatan :", dataMahasiswa[i].Angkatan)
-		fmt.Println("Aktif :", dataMahasiswa[i].Aktif)
-		fmt.Println("Hadir :", hadir)
-		fmt.Println("Izin :", izin)
-		fmt.Println("Sakit :", sakit)
-		fmt.Println("Alpa :", alpa)
+		fmt.Printf("%-20s %-8d %-10d %-6t %-6d %-6d %-6d %-6d\n",
+			dataMahasiswa[i].Nama,
+			dataMahasiswa[i].NIM,
+			dataMahasiswa[i].Angkatan,
+			dataMahasiswa[i].Aktif,
+			hitungHadir(dataMahasiswa[i]),
+			hitungIzin(dataMahasiswa[i]),
+			hitungSakit(dataMahasiswa[i]),
+			hitungAlpa(dataMahasiswa[i]))
 	}
+	fmt.Println("================================================================================")
 }
 
 func menuUtama() int {
