@@ -259,11 +259,9 @@ func menuSearching() {
 	fmt.Scan(&nama)
 
 	if pilih == 1 {
-
 		index = sequentialSearch(nama)
 
 	} else if pilih == 2 {
-
 		insertSortNama()
 		index = binarySearch(nama)
 
@@ -497,7 +495,6 @@ func selectSortNama() {
 		dataMahasiswa[min] = temp
 
 	}
-
 	fmt.Println("Data berhasil diurutkan berdasarkan nama (A-Z)")
 }
 
@@ -506,21 +503,14 @@ func insertSortNama() {
 	var j int
 
 	for i := 1; i < jmlmahasiswa; i++ {
-
 		temp = dataMahasiswa[i]
-
 		j = i - 1
-
 		for j >= 0 && dataMahasiswa[j].Nama > temp.Nama {
-
 			dataMahasiswa[j+1] = dataMahasiswa[j]
-
 			j--
 		}
-
 		dataMahasiswa[j+1] = temp
 	}
-
 	fmt.Println("Data berhasil diurutkan berdasarkan nama (A-Z)")
 }
 
@@ -530,12 +520,11 @@ func menuSorting() {
 
 	fmt.Println()
 	fmt.Println("===== MENU SORTING =====")
-	fmt.Println("1. Selection Sort Nama")
-	fmt.Println("2. Insertion Sort Nama")
-	fmt.Println("3. Selection Sort Hadir Terbanyak")
-	fmt.Println("4. Insertion Sort Alfa Terbanyak")
-	fmt.Println("5. Selection Sort Izin Terbanyak")
-	fmt.Println("6. Insertion Sort Sakit Terbanyak")
+	fmt.Println("1. Urutkan Berdasarkan Nama (A-Z)")
+	fmt.Println("2. Urutkan Berdasarkan Hadir Terbanyak")
+	fmt.Println("3. Urutkan Berdasarkan Alfa Terbanyak")
+	fmt.Println("4. Urutkan Berdasarkan Izin Terbanyak")
+	fmt.Println("5. Urutkan Berdasarkan Sakit Terbanyak")
 
 	fmt.Print("Pilih : ")
 	fmt.Scan(&pilih)
@@ -546,30 +535,24 @@ func menuSorting() {
 	}
 
 	if pilih == 2 {
-		insertSortNama()
-		tampilData()
-	}
-
-	if pilih == 3 {
 		selectSortHadir()
 		tampilData()
 	}
 
-	if pilih == 4 {
+	if pilih == 3 {
 		insertSortAlfa()
 		tampilData()
 	}
 
-	if pilih == 5 {
+	if pilih == 4 {
 		selectSortIzin()
 		tampilData()
 	}
 
-	if pilih == 6 {
+	if pilih == 5 {
 		insertSortSakit()
 		tampilData()
 	}
-
 }
 
 func selectSortHadir() {
@@ -863,13 +846,10 @@ func statistikMahasiswa() {
 		fmt.Println("Izin :", hitungIzin(dataMahasiswa[index]))
 		fmt.Println("Sakit :", hitungSakit(dataMahasiswa[index]))
 		fmt.Println("Alfa :", hitungAlpa(dataMahasiswa[index]))
-
 	}
-
 }
 
 func menuStatistik() {
-
 	var pilih int
 
 	fmt.Println()
@@ -883,42 +863,33 @@ func menuStatistik() {
 	fmt.Println("7. Alpa Terbanyak")
 	fmt.Println("8. Alpa Tersedikit")
 	fmt.Println("9. Statistik Mahasiswa")
-
 	fmt.Print("Pilih : ")
 	fmt.Scan(&pilih)
-
+	
 	if pilih == 1 {
 		hadirTerbanyak()
 	}
-
 	if pilih == 2 {
 		hadirTersedikit()
 	}
-
 	if pilih == 3 {
 		izinTerbanyak()
 	}
-
 	if pilih == 4 {
 		izinTersedikit()
 	}
-
 	if pilih == 5 {
 		sakitTerbanyak()
 	}
-
 	if pilih == 6 {
 		sakitTersedikit()
 	}
-
 	if pilih == 7 {
 		alpaTerbanyak()
 	}
-
 	if pilih == 8 {
 		alpaTersedikit()
 	}
-
 	if pilih == 9 {
 		statistikMahasiswa()
 	}
